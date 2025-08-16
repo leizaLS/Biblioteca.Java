@@ -3,12 +3,16 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Panel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class Main extends JFrame {
+    JPanel panel = new JPanel();
+    
     public Main() {
         setTitle("Biblioteca");
         setSize(600, 600);
@@ -16,7 +20,7 @@ public class Main extends JFrame {
         getContentPane().setBackground(Color.GRAY);
         
         //Llamar al panel
-        Panel();
+        panel();
         
        //Cierre
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -24,8 +28,8 @@ public class Main extends JFrame {
     
     
     //Panel
-    public void Panel() {
-        JPanel panel = new JPanel();
+    public void panel() {
+        //JPanel panel = new JPanel();
         //panel.setBackground(Color.BLUE);
         panel.setLayout(null);
         this.getContentPane().add(panel);
@@ -46,5 +50,23 @@ public class Main extends JFrame {
         img_label.setIcon(new ImageIcon(img.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
         
         panel.add(etiqueta);
+        
+        
+        //añadir elementos
+        buttons();
+        textBoxs();
+    }
+    
+    public void buttons() {
+        JButton button = new JButton("Hacer click");
+        
+        button.setBounds(10,400,150,30);
+        panel.add(button);
+    }
+    
+    public void textBoxs(){
+        JTextField text = new JTextField("ingrese texto");
+        text.setBounds(10,450,200,28);
+        panel.add(text);
     }
 }
