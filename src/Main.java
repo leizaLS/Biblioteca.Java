@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -62,6 +64,19 @@ public class Main extends JFrame {
         
         button.setBounds(10,400,150,30);
         panel.add(button);
+        
+        //Accion boton
+        ActionListener event = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //System.out.println("Hola");
+                Login login = new Login();
+                login.setVisible(true);
+                dispose(); //cerrar ventana actual
+            }
+        };
+        
+        button.addActionListener(event);
     }
     
     public void textBoxs(){
