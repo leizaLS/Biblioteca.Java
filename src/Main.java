@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
@@ -18,43 +19,41 @@ public class Main extends JFrame {
     public Main() {
         setTitle("Biblioteca");
         setSize(600, 600);
-        setMinimumSize(new Dimension(500, 500));
-        getContentPane().setBackground(Color.GRAY);
+        setResizable(false);
+        //setMinimumSize(new Dimension(600, 600));
+        //*getContentPane().setBackground(Color.GRAY);
         
         //Llamar al panel
         panel();
         
-       //Cierre
+        //Cierre
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
     
     //Panel
     public void panel() {
-        //JPanel panel = new JPanel();
-        //panel.setBackground(Color.BLUE);
         panel.setLayout(null);
         this.getContentPane().add(panel);
-        JLabel etiqueta = new JLabel("Manager Biblioteca", SwingConstants.CENTER);
+        
+        //Etiqueta
+        JLabel etiqueta = new JLabel("Ingrese su usuario y contraseña", SwingConstants.CENTER);
         etiqueta.setForeground(Color.white);
         etiqueta.setBackground(Color.black);
         etiqueta.setOpaque(true);
-        
-        //Mensaje
-        etiqueta.setBounds(10,10,500,30);
+        etiqueta.setFont(new Font("Arial", Font.BOLD, 18));
+        etiqueta.setBounds(0,20,600,45);
         
         //Imagen
         ImageIcon img  = new ImageIcon("biblioteca.png");
         JLabel img_label = new JLabel();
-        panel.add(img_label);
-        img_label.setBounds(180,1,400,400);
-        //Tamaño img
+        img_label.setBounds(200,1,400,400);
         img_label.setIcon(new ImageIcon(img.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
         
+        panel.add(img_label);
         panel.add(etiqueta);
         
-        
-        //añadir elementos
+        //Añadir elementos
         buttons();
         textBoxs();
     }
@@ -62,7 +61,7 @@ public class Main extends JFrame {
     public void buttons() {
         JButton button = new JButton("Hacer click");
         
-        button.setBounds(10,400,150,30);
+        button.setBounds(220,450,150,40);
         panel.add(button);
         
         //Accion boton
@@ -74,14 +73,18 @@ public class Main extends JFrame {
                 login.setVisible(true);
                 dispose(); //cerrar ventana actual
             }
-        };
-        
+        };      
         button.addActionListener(event);
     }
     
     public void textBoxs(){
-        JTextField text = new JTextField("ingrese texto");
-        text.setBounds(10,450,200,28);
+        JTextField text = new JTextField("Usuario");
+        JTextField text2 = new JTextField("Contraseña");
+        
+        text.setBounds(180,350,240,28);
+        text2.setBounds(180,400,240,28);
+        
         panel.add(text);
+        panel.add(text2);
     }
 }
