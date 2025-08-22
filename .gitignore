@@ -1,0 +1,4 @@
+# .gitignore
+src/firebase-json/*.json
+src/firebase-json/*.json 
+src/firebase-json/*.json 
