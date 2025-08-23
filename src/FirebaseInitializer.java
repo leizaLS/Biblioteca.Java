@@ -14,7 +14,7 @@ public class FirebaseInitializer {
     public static FirebaseApp initialize() throws IOException {
         if (firebaseApp == null) {
             InputStream serviceAccount = FirebaseInitializer.class.getClassLoader()
-                .getResourceAsStream("firebase-json/library-db-aed0e-firebase-adminsdk-fbsvc-08cde7a4c7.json");
+                .getResourceAsStream("firebase-json/library-db-aed0e-firebase-adminsdk-fbsvc-faeacc3ae0.json");
 
             if (serviceAccount == null) {
                 throw new FileNotFoundException("Archivo de credenciales Firebase no encontrado en recursos");

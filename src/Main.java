@@ -2,9 +2,6 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import com.google.firebase.FirebaseApp;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
@@ -56,38 +53,51 @@ public class Main extends JFrame {
         button.setBounds(220, 450, 150, 40);
         panel.add(button);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String user_ = user.getText();
+        button.addActionListener(e -> {
+            String user_ = user.getText();
 
-                if (!user_.isEmpty()) {
-                    try {
-                        FirebaseApp app = FirebaseInitializer.initialize();
+            if (!user_.isEmpty()) {
+                try {
+                    FirebaseApp app = FirebaseInitializer.initialize();
 
-                        UserService userService = new UserService();
-                        userService.addUser(user_, new UserService.Callback() {
-                            @Override
-                            public void onComplete(boolean success, String message) {
-                                SwingUtilities.invokeLater(() -> {
-                                    if (success) {
-                                        JOptionPane.showMessageDialog(null, message);
-                                        dispose();
-                                        // Aquí puedes abrir la ventana principal de la biblioteca, si la tienes
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Error: " + message);
-                                    }
-                                });
-                            }
-                        });
+                    UserService userService = new UserService();
 
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Error al conectar con Firebase");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Por favor ingrese usuario");
+                    userService.checkUserExists(user_, new UserService.Callback() {
+                        @Override
+                        public void onComplete(boolean exists, String message) {
+                            SwingUtilities.invokeLater(() -> {
+                                if (exists) {
+                                    // Usuario ya existe, mostramos mensaje de login
+                                    JOptionPane.showMessageDialog(null, message);
+                                    dispose();
+                                    // Aquí puedes abrir la ventana principal de la biblioteca si la tienes
+                                } else {
+                                    // Usuario no existe, registramos
+                                    userService.addUser(user_, new UserService.Callback() {
+                                        @Override
+                                        public void onComplete(boolean success, String regMessage) {
+                                            SwingUtilities.invokeLater(() -> {
+                                                if (success) {
+                                                    JOptionPane.showMessageDialog(null, regMessage);
+                                                    dispose();
+                                                    // Aquí puedes abrir la ventana principal de la biblioteca si la tienes
+                                                } else {
+                                                    JOptionPane.showMessageDialog(null, "Error: " + regMessage);
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error al conectar con Firebase");
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese usuario");
             }
         });
     }
@@ -103,11 +113,11 @@ public class Main extends JFrame {
         showPswrd.setFocusPainted(false);
         showPswrd.setMargin(new Insets(0, 0, 0, 0));
 
-        showPswrd.addActionListener(new ActionListener() {
+        showPswrd.addActionListener(new java.awt.event.ActionListener() {
             private boolean mostrar = false;
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
                 mostrar = !mostrar;
                 if (mostrar) {
                     pswrd.setEchoChar((char) 0);
