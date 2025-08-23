@@ -1,9 +1,6 @@
-//package com.mycompany.library.maven;
-
 import javax.swing.*;
 import java.awt.*;
 import com.google.firebase.FirebaseApp;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Main extends JFrame {
 
@@ -59,7 +56,6 @@ public class Main extends JFrame {
             if (!user_.isEmpty()) {
                 try {
                     FirebaseApp app = FirebaseInitializer.initialize();
-
                     UserService userService = new UserService();
 
                     userService.checkUserExists(user_, new UserService.Callback() {
@@ -67,12 +63,10 @@ public class Main extends JFrame {
                         public void onComplete(boolean exists, String message) {
                             SwingUtilities.invokeLater(() -> {
                                 if (exists) {
-                                    // Usuario ya existe, mostramos mensaje de login
                                     JOptionPane.showMessageDialog(null, message);
-                                    dispose();
-                                    // Aquí puedes abrir la ventana principal de la biblioteca si la tienes
+                                    dispose(); // Cerramos la ventana actual
+                                    new Library(user_); // Abrimos Library
                                 } else {
-                                    // Usuario no existe, registramos
                                     userService.addUser(user_, new UserService.Callback() {
                                         @Override
                                         public void onComplete(boolean success, String regMessage) {
@@ -80,7 +74,7 @@ public class Main extends JFrame {
                                                 if (success) {
                                                     JOptionPane.showMessageDialog(null, regMessage);
                                                     dispose();
-                                                    // Aquí puedes abrir la ventana principal de la biblioteca si la tienes
+                                                    new Library(user_);
                                                 } else {
                                                     JOptionPane.showMessageDialog(null, "Error: " + regMessage);
                                                 }
@@ -96,6 +90,7 @@ public class Main extends JFrame {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error al conectar con Firebase");
                 }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese usuario");
             }

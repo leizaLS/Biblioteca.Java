@@ -27,5 +27,6 @@ public class Library extends JFrame{
 
         // Agregar al JFrame
         add(label);
+        setVisible(true);
     }
 }
