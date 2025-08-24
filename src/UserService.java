@@ -1,5 +1,3 @@
-//package com.mycompany.library.maven;
-
 import com.google.api.core.ApiFuture;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -12,7 +10,6 @@ import java.io.BufferedReader;
 import java.util.concurrent.ExecutionException;
 
 public class UserService {
-
     private static final String DATABASE_URL = "https://library-db-aed0e-default-rtdb.firebaseio.com/";
 
     public interface Callback {
@@ -43,7 +40,7 @@ public class UserService {
                     if (jsonResponse.equals("null")) {
                         callback.onComplete(false, "Usuario no existe");
                     } else {
-                        callback.onComplete(true, "Usuario ya registrado. Logueado correctamente");
+                        callback.onComplete(true, "Logueado correctamente");
                     }
                 } else {
                     callback.onComplete(false, "Error al consultar usuario: Código " + responseCode);
@@ -57,7 +54,6 @@ public class UserService {
 
     public void addUser(String username, Callback callback) {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users");
-
         ApiFuture<Void> future = dbRef.child(username).setValueAsync("dummyPassword");
 
         new Thread(() -> {
