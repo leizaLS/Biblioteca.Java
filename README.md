@@ -1,4 +1,4 @@
-📚 Biblioteca Virtual - Java Swing + Firebase
+## 📚 Biblioteca Virtual - Java Swing + Firebase
 
 Una aplicación de escritorio desarrollada con Java Swing y conectada a Firebase Realtime Database, que simula una biblioteca virtual. Los usuarios pueden registrarse o iniciar sesión, visualizar libros y solicitar préstamos. Los administradores pueden revisar un historial detallado de peticiones.
 
@@ -6,78 +6,64 @@ Una aplicación de escritorio desarrollada con Java Swing y conectada a Firebase
 
 La interfaz fue creada manualmente utilizando JFrame, JPanel, JLabel, JButton, JTextField, etc., sin utilizar asistentes visuales ni GUI builders. Esto ofrece mayor control sobre la disposición y estilo de los componentes.
 
-🔧 Tecnologías utilizadas
+## 🔧 Tecnologías utilizadas
 
-Java 8+
+- Java Swing (Apache NetBeans)
 
-Java Swing (GUI hecha a mano)
+- Firebase Realtime Database (para autenticación y almacenamiento de datos)
 
-Firebase Realtime Database (para autenticación y almacenamiento de datos)
+- Librerias de Java
 
-Librerias de Java
+## 🔑 Funcionalidades
 
-🔑 Funcionalidades
 👥 Usuario estándar:
 
-Registro automático: si el usuario no existe, se registra automáticamente al ingresar un nombre
+- Registro/Login: Si el usuario ya existe, se inicia sesión
 
-Login automático: si el usuario ya existe, se inicia sesión
+- Visualización de libros disponibles con información: título, autor, ISBN, género
 
-Visualización de libros disponibles:
-
-Información: título, autor, ISBN, género
-
-Solicitud de préstamo con un botón
-
+- Solicitud de préstamo de libros
+  
 🛠️ Administrador:
 
-Acceso con nombre de usuario designado como "admin"
+- Acceso con nombre de usuario designado como "Admin"
 
-Visualización del historial completo de préstamos:
+- Visualización del historial completo de préstamos:
 
-Usuario que solicitó y Título del libro
+- Usuario que realizó la petición, como también datos como título del libro, fecha y hora exacta de la solicitud
 
-Fecha y hora exacta de la solicitud
-
-📂 Organización del proyecto
+## 📂 Organización del proyecto
 /src
-  /biblioteca
-    - Main.java                 // Login y registro
-    - Library.java              // Pantalla de libros disponibles
-    - AdminPanel.java           // Historial de préstamos
-    - FirebaseInitializer.java  // Inicialización de conexión con Firebase
-    - UserService.java          // Lógica de usuarios
-    - Book.java                 // Modelo de libro
-    - Request.java              // Modelo de préstamo
+  - Main.java                 // Login y registro
+  - Library.java              // Pantalla de libros disponibles
+  - AdminPanel.java           // Historial de préstamos
+  - FirebaseInitializer.java  // Inicialización de conexión con Firebase
+  - UserService.java          // Lógica de usuarios
+  - Book.java                 // Modelo de libro
+  - Request.java              // Modelo de préstamo
 
-🚀 Cómo ejecutar el proyecto
+## 🚀 Cómo ejecutar el proyecto
 
-Clona el repositorio o abre en NetBeans
+- Clona el repositorio o abre en NetBeans
 
-Asegúrate de tener:
+- Asegúrate de tener: JDK 8 o superior
 
-JDK 8 o superior
+- Descargar librerías necesarias
 
-Librerías necesarias
+## ⚙️ Configuración de Firebase
 
-⚙️ Configuración de Firebase
+- Crea un proyecto en Firebase y habilita Realtime Database
 
-Crea un proyecto en Firebase Console
+- Descarga el archivo de claves del servicio (.json). En FirebaseInitializer.java, coloca la direccion del json y cambia la url de tu Firebase Realtime.
 
-Habilita Realtime Database
+## 💡 Ideas para mejorar
 
-Descarga el archivo de claves del servicio (.json)
+- Validación con contraseña real (actualmente se ignora el campo de contraseña)
 
-En FirebaseInitializer.java, coloca la direccion del json y cambia la url de tu firebase realtime.
+- Búsqueda de libros por título o autor
 
-💡 Ideas para mejorar (futuras versiones)
+- Devoluciones y fecha límite de préstamo
 
-Validación con contraseña real (actualmente se ignora el campo de contraseña)
+- Control de disponibilidad de ejemplares
 
-Búsqueda de libros por título o autor
-
-Devoluciones y fecha límite de préstamo
-
-Control de disponibilidad de ejemplares
-
-Exportación del historial a PDF/CSV
+- Exportación del historial a PDF/CSV
