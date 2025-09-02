@@ -15,4 +15,3 @@ public class Book {
     public String getGenre() { return genre; }
     public String getCoverUrl() { return coverUrl; }
 }
-

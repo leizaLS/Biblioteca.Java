@@ -4,10 +4,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Library extends JFrame {
     private final String user;
     private JPanel booksPanel;
+    private JTextField searchField;
+    private List<Book> allBooks = new ArrayList<>();
 
     public Library(String user) {
         this.user = user;
@@ -15,25 +19,57 @@ public class Library extends JFrame {
         loadBooks();
     }
 
-    private void initUI() {     
+    private void initUI() {
         setSize(850, 700);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        JLabel welcomeLabel = new JLabel("Bienvenido: " + user + ". Selecciona un libro...", SwingConstants.CENTER);
+        // Welcome label
+        JLabel welcomeLabel = new JLabel("Bienvenido: " + user, SwingConstants.LEFT);
         welcomeLabel.setOpaque(true);
         welcomeLabel.setForeground(Color.WHITE);
         welcomeLabel.setBackground(Color.BLACK);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        welcomeLabel.setPreferredSize(new Dimension(800, 40));
-        add(welcomeLabel, BorderLayout.NORTH);
+        welcomeLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
+        welcomeLabel.setPreferredSize(new Dimension(300, 40));
 
+        // Logout button
+        JButton logoutButton = new JButton("Cerrar sesión");
+        logoutButton.setFont(new Font("Arial", Font.BOLD, 14));
+        logoutButton.setBackground(new Color(220, 20, 60));
+        logoutButton.setForeground(Color.WHITE);
+        logoutButton.setFocusPainted(false);
+        logoutButton.addActionListener(e -> {
+            dispose();
+            new Main().setVisible(true);
+        });
+
+        // Top panel with welcome and logout
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(welcomeLabel, BorderLayout.WEST);
+        topPanel.add(logoutButton, BorderLayout.EAST);
+        topPanel.setPreferredSize(new Dimension(850, 40));
+        add(topPanel, BorderLayout.NORTH);
+
+        // Search field
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel searchLabel = new JLabel("Buscar por título o ISBN:");
+        searchField = new JTextField(30);
+        JButton searchButton = new JButton("Buscar");
+        searchButton.addActionListener(e -> filterBooks());
+
+        searchPanel.add(searchLabel);
+        searchPanel.add(searchField);
+        searchPanel.add(searchButton);
+
+        add(searchPanel, BorderLayout.SOUTH);
+
+        // Books panel inside scroll pane
         booksPanel = new JPanel();
         booksPanel.setLayout(new BoxLayout(booksPanel, BoxLayout.Y_AXIS));
         booksPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
         JScrollPane scrollPane = new JScrollPane(booksPanel);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -46,33 +82,62 @@ public class Library extends JFrame {
         booksRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                SwingUtilities.invokeLater(() -> {
-                    if (!snapshot.exists()) {
-                        booksPanel.add(new JLabel("No hay libros disponibles."));
-                    } else {
-                        for (DataSnapshot bookSnap : snapshot.getChildren()) {
-                            Book book = parseBook(bookSnap);
-                            if (book != null) {
-                                JPanel bookPanel = createBookPanel(book);
-                                booksPanel.add(bookPanel);
-                                booksPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-                            }
+                allBooks.clear();
+                booksPanel.removeAll();
+
+                if (!snapshot.exists()) {
+                    booksPanel.add(new JLabel("No hay libros disponibles."));
+                } else {
+                    for (DataSnapshot bookSnap : snapshot.getChildren()) {
+                        Book book = parseBook(bookSnap);
+                        if (book != null) {
+                            allBooks.add(book);
                         }
                     }
-                    booksPanel.revalidate();
-                    booksPanel.repaint();
-                });
+                    // Mostrar todos al inicio
+                    for (Book book : allBooks) {
+                        booksPanel.add(createBookPanel(book));
+                        booksPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+                    }
+                }
+                booksPanel.revalidate();
+                booksPanel.repaint();
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                SwingUtilities.invokeLater(() -> {
-                    booksPanel.add(new JLabel("Error al cargar libros: " + error.getMessage()));
-                    booksPanel.revalidate();
-                    booksPanel.repaint();
-                });
+                booksPanel.removeAll();
+                booksPanel.add(new JLabel("Error al cargar libros: " + error.getMessage()));
+                booksPanel.revalidate();
+                booksPanel.repaint();
             }
         });
+    }
+
+    private void filterBooks() {
+        String query = searchField.getText().trim().toLowerCase();
+        booksPanel.removeAll();
+
+        if (query.isEmpty()) {
+            for (Book book : allBooks) {
+                booksPanel.add(createBookPanel(book));
+                booksPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            }
+        } else {
+            boolean found = false;
+            for (Book book : allBooks) {
+                if (book.getTitle().toLowerCase().contains(query) || book.getIsbn().toLowerCase().contains(query)) {
+                    booksPanel.add(createBookPanel(book));
+                    booksPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+                    found = true;
+                }
+            }
+            if (!found) {
+                booksPanel.add(new JLabel("No se encontraron libros que coincidan con la búsqueda."));
+            }
+        }
+        booksPanel.revalidate();
+        booksPanel.repaint();
     }
 
     private Book parseBook(DataSnapshot snap) {

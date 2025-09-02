@@ -65,7 +65,11 @@ public class Main extends JFrame {
                                 if (exists) {
                                     JOptionPane.showMessageDialog(null, message);
                                     dispose(); // Cerramos la ventana actual
-                                    new Library(user_); // Abrimos Library
+                                    if (user_.equalsIgnoreCase("admin")) {
+                                        new Admin().setVisible(true);
+                                    } else {
+                                        new Library(user_);
+                                    }
                                 } else {
                                     userService.addUser(user_, new UserService.Callback() {
                                         @Override
@@ -74,7 +78,11 @@ public class Main extends JFrame {
                                                 if (success) {
                                                     JOptionPane.showMessageDialog(null, regMessage);
                                                     dispose();
-                                                    new Library(user_);
+                                                    if (user_.equalsIgnoreCase("admin")) {
+                                                        new Admin().setVisible(true);
+                                                    } else {
+                                                        new Library(user_);
+                                                    }
                                                 } else {
                                                     JOptionPane.showMessageDialog(null, "Error: " + regMessage);
                                                 }
