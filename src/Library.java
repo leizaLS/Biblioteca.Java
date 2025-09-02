@@ -33,7 +33,7 @@ public class Library extends JFrame {
         welcomeLabel.setBackground(Color.BLACK);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         welcomeLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
-        welcomeLabel.setPreferredSize(new Dimension(300, 40));
+        welcomeLabel.setPreferredSize(new Dimension(720, 40));
 
         // Logout button
         JButton logoutButton = new JButton("Cerrar sesión");

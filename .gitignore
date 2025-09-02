@@ -2,3 +2,4 @@
 src/firebase-json/*
 build/classes/firebase-json/*
 
+/dist/

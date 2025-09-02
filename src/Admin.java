@@ -51,6 +51,7 @@ public class Admin extends JFrame {
 
         requestsPanel = new JPanel();
         requestsPanel.setLayout(new BoxLayout(requestsPanel, BoxLayout.Y_AXIS));
+        requestsPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // margen interno (top, left, bottom, right)
         JScrollPane scrollPane = new JScrollPane(requestsPanel);
         add(scrollPane, BorderLayout.CENTER);
     }
@@ -115,6 +116,7 @@ public class Admin extends JFrame {
         );
         textArea.setEditable(false);
         textArea.setOpaque(false);
+        textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
         textArea.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(textArea, BorderLayout.CENTER);
 
