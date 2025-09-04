@@ -25,6 +25,7 @@ public class Admin extends JFrame {
 
         JPanel topPanel = new JPanel(new BorderLayout(10, 10));
         topPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        //topPanel.setBackground(Color.red);
 
         JLabel label = new JLabel("Filtrar por usuario:");
         filterField = new JTextField();
@@ -35,6 +36,7 @@ public class Admin extends JFrame {
         });
 
         JButton logoutBtn = new JButton("Cerrar sesión");
+        logoutBtn.setBackground(new Color(250, 70, 35));
         logoutBtn.addActionListener(e -> {
             dispose();
             new Main().setVisible(true);
@@ -50,6 +52,7 @@ public class Admin extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         requestsPanel = new JPanel();
+        requestsPanel.setBackground(Color.GRAY);
         requestsPanel.setLayout(new BoxLayout(requestsPanel, BoxLayout.Y_AXIS));
         requestsPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // margen interno (top, left, bottom, right)
         JScrollPane scrollPane = new JScrollPane(requestsPanel);
@@ -107,7 +110,7 @@ public class Admin extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setPreferredSize(new Dimension(750, 100));
         panel.setMaximumSize(new Dimension(750, 100));
-        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
         JTextArea textArea = new JTextArea(
             "Usuario: " + request.user + "\n" +
@@ -117,14 +120,16 @@ public class Admin extends JFrame {
         textArea.setEditable(false);
         textArea.setOpaque(false);
         textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
-        textArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        textArea.setFont(new Font("Arial", Font.PLAIN, 16));
         panel.add(textArea, BorderLayout.CENTER);
 
         JButton deleteBtn = new JButton("Eliminar");
-        deleteBtn.setBackground(new Color(220, 20, 60));
+        deleteBtn.setBackground(new Color(205, 92, 92));
         deleteBtn.setForeground(Color.WHITE);
         deleteBtn.setFocusPainted(false);
         deleteBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        //Confirmar
         deleteBtn.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(this, "¿Eliminar esta solicitud?", "Confirmar", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
