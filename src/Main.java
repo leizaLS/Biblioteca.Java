@@ -100,7 +100,7 @@ public class Main extends JFrame {
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Por favor ingrese usuario");
+                JOptionPane.showMessageDialog(null, "Por favor ingrese su usuario");
             }
         });
     }

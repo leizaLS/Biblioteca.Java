@@ -1,5 +1,9 @@
-# .gitignore
+# Ignorar lo que esté en estas rutas específicas
 src/firebase-json/*
 build/classes/firebase-json/*
 
-/dist/
+# Ignorar todo el build y dist
+/build/
+
+
+# Mantener dist/lib y su contenido (dependencias jar)
