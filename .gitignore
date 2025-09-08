@@ -4,6 +4,3 @@ build/classes/firebase-json/*
 
 # Ignorar todo el build y dist
 /build/
-
-
-# Mantener dist/lib y su contenido (dependencias jar)
