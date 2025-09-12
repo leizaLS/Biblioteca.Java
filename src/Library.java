@@ -86,7 +86,7 @@ public class Library extends JFrame {
                 booksPanel.removeAll();
 
                 if (!snapshot.exists()) {
-                    booksPanel.add(new JLabel("No hay libros disponibles."));
+                    booksPanel.add(new JLabel("Disculpe, no hay libros disponibles."));
                 } else {
                     for (DataSnapshot bookSnap : snapshot.getChildren()) {
                         Book book = parseBook(bookSnap);

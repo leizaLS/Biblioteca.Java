@@ -131,7 +131,7 @@ public class Admin extends JFrame {
         
         //Confirmar
         deleteBtn.addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(this, "¿Eliminar esta solicitud?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Eliminar esta solicitud?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (confirm == JOptionPane.YES_OPTION) {
                 deleteRequest(request.key);
             }
